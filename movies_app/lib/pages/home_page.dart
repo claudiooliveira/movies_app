@@ -32,14 +32,14 @@ class _HomePageState extends State<HomePage> {
             future: _controller.fetchMovies(),
             builder: (context, snapshot) {
               if (snapshot.hasData) {
-                final List<Movies> listMovies = snapshot.data as List<Movies>;
+                final Movies? movies = snapshot.data;
                 return Observer(
                   builder: (_) {
                     return ListView.builder(
-                        itemCount: listMovies.length,
+                        itemCount: movies != null ? movies.results.length : 0,
                         itemBuilder: (context, index) {
                           return ListTile(
-                            title: Text(listMovies[index].name),
+                            title: Text(movies!.results[index].title),
                           );
                         });
                   },
