@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:movies_app/controllers/movie_controller.dart';
 import 'package:movies_app/models/movies_model.dart';
 import 'package:movies_app/repositories/movies_repository_implementation.dart';
@@ -32,13 +33,17 @@ class _HomePageState extends State<HomePage> {
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 final List<Movies> listMovies = snapshot.data as List<Movies>;
-                return ListView.builder(
-                    itemCount: listMovies.length,
-                    itemBuilder: (context, index) {
-                      return ListTile(
-                        title: Text(listMovies[index].name),
-                      );
-                    });
+                return Observer(
+                  builder: (_) {
+                    return ListView.builder(
+                        itemCount: listMovies.length,
+                        itemBuilder: (context, index) {
+                          return ListTile(
+                            title: Text(listMovies[index].name),
+                          );
+                        });
+                  },
+                );
               }
               return Container(
                 color: Colors.blue,
